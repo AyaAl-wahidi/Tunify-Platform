@@ -53,7 +53,25 @@ namespace Tunify_Platform.Controllers
         public async Task<IActionResult> DeleteArtist(int id)
         {
             var deleteUser = _context.DeleteArtist(id);
-            return Ok(deleteUser);
+            return Ok();
+        }
+
+        [HttpPost("{artistId}/songs/{songId}")]
+        public async Task<Song> AddSongToArtist(int artistId, int songId)
+        {
+            var Song = await _context.AddSongToArtist(artistId, songId);
+            return Song;
+        }
+
+        [HttpGet("{artistId}/songs")]
+        public async Task<ActionResult<IEnumerable<Song>>> GetAllSongsFromArtistId(int artistId)
+        {
+            var songs = await _context.GetAllSongsFromArtistId(artistId);
+            if (songs == null || !songs.Any())
+            {
+                return NotFound($"No songs found for playlist with ID {artistId}");
+            }
+            return songs;
         }
     }
 }

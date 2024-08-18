@@ -1,6 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Tunify_Platform.Models;
 using Tunify_Platform.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Tunify_Platform.Data;
+
 
 namespace Tunify_Platform.Controllers
 {
@@ -52,7 +61,26 @@ namespace Tunify_Platform.Controllers
         public async Task<IActionResult> DeletePlaylist(int id)
         {
             var deletePlaylist = _context.DeletePlaylist(id);
-            return Ok(deletePlaylist);
+            return Ok();
+        }
+
+        [HttpPost("/{playlistId}/songs/{songId}")]
+        public async Task<IActionResult> AddSongToPlaylist(int playlistId, int songId)
+        {
+            var newSong = _context.AddSongToPlaylist(playlistId, songId);
+            return Ok();
+        }
+
+        [HttpGet("{playlistId}/songs")]
+        public async Task<ActionResult<IEnumerable<Song>>> GetAllSongsFromPlaylistId(int playlistId)
+        {
+            var songs = await _context.GetAllSongsFromPlaylistId(playlistId);
+            if (songs == null || !songs.Any())
+            {
+                return NotFound($"No songs found for playlist with ID {playlistId}");
+            }
+
+            return songs;
         }
     }
 }
