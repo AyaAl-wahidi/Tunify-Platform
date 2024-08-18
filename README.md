@@ -31,6 +31,22 @@ The Repository Design Pattern is a well-established software design pattern used
 
 - **Reusability**: Repositories can be reused across different parts of the application, reducing code duplication and promoting DRY (Don't Repeat Yourself) principles.
 
+  ## Navigation and Routing Functionalities
+We enhanced the Tunify Platform with advanced navigation and routing features. These improvements streamline user interactions and ensure a more intuitive experience within the application:
+
+* **Dynamic Routing**: Routes are generated dynamically based on user actions and application state. This allows for seamless transitions between different views and resources.
+* **Parameterized Routes**: Support for parameterized routes, such as playlist IDs and artist names, enables direct access to specific content within the application.
+* **Route Guards**: Implemented route guards to control access to certain areas of the application based on user authentication and roles.
+* **Navigation Service**: Introduced a centralized navigation service to manage routing logic and transitions, ensuring consistency across the application.
+
+### Playlist-Song Relationship
+- Users can add songs to a playlist via the `POST /api/PlayLists/{playlistId}/songs/{songId}` endpoint.
+- Songs associated with a playlist can be retrieved using the `GET /api/playlists/{playlistId}/songs` endpoint.
+
+### Artist-Song Relationship
+- Users can associate songs with an artist via the `POST /api/Artists/{artistId}/songs/{songId}` endpoint.
+- All songs by an artist can be retrieved using the `GET /api/Artists/{artistId}/songs` endpoint.
+
 - ## Tunify ERD Diagram
-![Tunify ERD Diagram](Tunify-Platform/Assets/Tunify.png)
+![Tunify ERD Diagram](/Tunify-Platform/Assets/TuinyfyPlatform-ERD.JPG)
 
