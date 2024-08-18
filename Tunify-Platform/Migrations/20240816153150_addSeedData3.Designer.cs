@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tunify_Platform.Data;
 
@@ -11,9 +12,11 @@ using Tunify_Platform.Data;
 namespace Tunify_Platform.Migrations
 {
     [DbContext(typeof(TunifyDbContext))]
-    partial class TunifyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240816153150_addSeedData3")]
+    partial class addSeedData3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,28 +129,28 @@ namespace Tunify_Platform.Migrations
                         new
                         {
                             PlaylistId = 1,
-                            Created_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8539),
+                            Created_Date = new DateTime(2024, 8, 16, 18, 31, 50, 244, DateTimeKind.Local).AddTicks(5230),
                             Playlist_Name = "Playlist One",
                             UserId = 1
                         },
                         new
                         {
                             PlaylistId = 2,
-                            Created_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8541),
+                            Created_Date = new DateTime(2024, 8, 16, 18, 31, 50, 244, DateTimeKind.Local).AddTicks(5232),
                             Playlist_Name = "Playlist Two",
                             UserId = 2
                         },
                         new
                         {
                             PlaylistId = 3,
-                            Created_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8542),
+                            Created_Date = new DateTime(2024, 8, 16, 18, 31, 50, 244, DateTimeKind.Local).AddTicks(5233),
                             Playlist_Name = "Playlist 3",
                             UserId = 1
                         },
                         new
                         {
                             PlaylistId = 4,
-                            Created_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8544),
+                            Created_Date = new DateTime(2024, 8, 16, 18, 31, 50, 244, DateTimeKind.Local).AddTicks(5235),
                             Playlist_Name = "Playlist 4",
                             UserId = 2
                         });
@@ -329,7 +332,7 @@ namespace Tunify_Platform.Migrations
                         {
                             UserId = 1,
                             Email = "user1@example.com",
-                            Join_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8502),
+                            Join_Date = new DateTime(2024, 8, 16, 18, 31, 50, 244, DateTimeKind.Local).AddTicks(5197),
                             SubscriptionId = 1,
                             Username = "user1"
                         },
@@ -337,7 +340,7 @@ namespace Tunify_Platform.Migrations
                         {
                             UserId = 2,
                             Email = "user2@example.com",
-                            Join_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8513),
+                            Join_Date = new DateTime(2024, 8, 16, 18, 31, 50, 244, DateTimeKind.Local).AddTicks(5214),
                             SubscriptionId = 2,
                             Username = "user2"
                         });

@@ -51,8 +51,17 @@ namespace Tunify_Platform.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var deleteUser =  _context.DeleteUser(id);
-            return Ok(deleteUser);
+            try
+            {
+                await DeleteUser(id); // Await the async operation
+                return Ok(); // Return a 200 OK response if successful
+            }
+            catch (Exception e)
+            {
+                // Log and return a 500 Internal Server Error response
+                Console.WriteLine($"An error occurred: {e.Message}");
+                return StatusCode(500, $"Internal server error: {e.Message}");
+            }
         }
     }
 }

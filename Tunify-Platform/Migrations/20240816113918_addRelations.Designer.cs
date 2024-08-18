@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tunify_Platform.Data;
 
@@ -11,9 +12,11 @@ using Tunify_Platform.Data;
 namespace Tunify_Platform.Migrations
 {
     [DbContext(typeof(TunifyDbContext))]
-    partial class TunifyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240816113918_addRelations")]
+    partial class addRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,22 +48,6 @@ namespace Tunify_Platform.Migrations
                     b.HasIndex("ArtistId");
 
                     b.ToTable("Album");
-
-                    b.HasData(
-                        new
-                        {
-                            AlbumId = 1,
-                            Album_Name = "Album One",
-                            ArtistId = 1,
-                            Release_Date = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            AlbumId = 2,
-                            Album_Name = "Album Two",
-                            ArtistId = 2,
-                            Release_Date = new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Tunify_Platform.Models.Artist", b =>
@@ -82,20 +69,6 @@ namespace Tunify_Platform.Migrations
                     b.HasKey("ArtistId");
 
                     b.ToTable("Artist");
-
-                    b.HasData(
-                        new
-                        {
-                            ArtistId = 1,
-                            Bio = "Bio of Artist One",
-                            Name = "Artist One"
-                        },
-                        new
-                        {
-                            ArtistId = 2,
-                            Bio = "Bio of Artist Two",
-                            Name = "Artist Two"
-                        });
                 });
 
             modelBuilder.Entity("Tunify_Platform.Models.Playlist", b =>
@@ -121,36 +94,6 @@ namespace Tunify_Platform.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Playlist");
-
-                    b.HasData(
-                        new
-                        {
-                            PlaylistId = 1,
-                            Created_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8539),
-                            Playlist_Name = "Playlist One",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            PlaylistId = 2,
-                            Created_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8541),
-                            Playlist_Name = "Playlist Two",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            PlaylistId = 3,
-                            Created_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8542),
-                            Playlist_Name = "Playlist 3",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            PlaylistId = 4,
-                            Created_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8544),
-                            Playlist_Name = "Playlist 4",
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("Tunify_Platform.Models.PlaylistSongs", b =>
@@ -174,20 +117,6 @@ namespace Tunify_Platform.Migrations
                     b.HasIndex("SongId");
 
                     b.ToTable("PlaylistSongs");
-
-                    b.HasData(
-                        new
-                        {
-                            PlaylistSongsId = 1,
-                            PlaylistId = 1,
-                            SongId = 1
-                        },
-                        new
-                        {
-                            PlaylistSongsId = 2,
-                            PlaylistId = 2,
-                            SongId = 2
-                        });
                 });
 
             modelBuilder.Entity("Tunify_Platform.Models.Song", b =>
@@ -222,44 +151,6 @@ namespace Tunify_Platform.Migrations
                     b.HasIndex("ArtistId");
 
                     b.ToTable("Song");
-
-                    b.HasData(
-                        new
-                        {
-                            SongId = 1,
-                            AlbumId = 1,
-                            ArtistId = 1,
-                            Duration = new TimeSpan(0, 0, 3, 0, 0),
-                            Genre = "Pop",
-                            Title = "Song One"
-                        },
-                        new
-                        {
-                            SongId = 2,
-                            AlbumId = 2,
-                            ArtistId = 2,
-                            Duration = new TimeSpan(0, 0, 4, 0, 0),
-                            Genre = "Rock",
-                            Title = "Song Two"
-                        },
-                        new
-                        {
-                            SongId = 3,
-                            AlbumId = 1,
-                            ArtistId = 1,
-                            Duration = new TimeSpan(0, 0, 3, 0, 0),
-                            Genre = "Pop",
-                            Title = "Song 3"
-                        },
-                        new
-                        {
-                            SongId = 4,
-                            AlbumId = 2,
-                            ArtistId = 2,
-                            Duration = new TimeSpan(0, 0, 4, 0, 0),
-                            Genre = "Rock",
-                            Title = "Song 4"
-                        });
                 });
 
             modelBuilder.Entity("Tunify_Platform.Models.Subscription", b =>
@@ -280,20 +171,6 @@ namespace Tunify_Platform.Migrations
                     b.HasKey("SubscriptionId");
 
                     b.ToTable("Subscription");
-
-                    b.HasData(
-                        new
-                        {
-                            SubscriptionId = 1,
-                            Price = 9.9900000000000002,
-                            Subscription_Type = "Basic"
-                        },
-                        new
-                        {
-                            SubscriptionId = 2,
-                            Price = 19.989999999999998,
-                            Subscription_Type = "Premium"
-                        });
                 });
 
             modelBuilder.Entity("Tunify_Platform.Models.User", b =>
@@ -323,24 +200,6 @@ namespace Tunify_Platform.Migrations
                     b.HasIndex("SubscriptionId");
 
                     b.ToTable("User");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            Email = "user1@example.com",
-                            Join_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8502),
-                            SubscriptionId = 1,
-                            Username = "user1"
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            Email = "user2@example.com",
-                            Join_Date = new DateTime(2024, 8, 17, 16, 26, 33, 396, DateTimeKind.Local).AddTicks(8513),
-                            SubscriptionId = 2,
-                            Username = "user2"
-                        });
                 });
 
             modelBuilder.Entity("Tunify_Platform.Models.Album", b =>
@@ -348,7 +207,7 @@ namespace Tunify_Platform.Migrations
                     b.HasOne("Tunify_Platform.Models.Artist", "Artist")
                         .WithMany("Albums")
                         .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Artist");
@@ -359,7 +218,7 @@ namespace Tunify_Platform.Migrations
                     b.HasOne("Tunify_Platform.Models.User", "User")
                         .WithMany("Playlists")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -370,13 +229,13 @@ namespace Tunify_Platform.Migrations
                     b.HasOne("Tunify_Platform.Models.Playlist", "Playlist")
                         .WithMany("playlistSongs")
                         .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Tunify_Platform.Models.Song", "Song")
                         .WithMany("playlistSongs")
                         .HasForeignKey("SongId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Playlist");
@@ -408,7 +267,7 @@ namespace Tunify_Platform.Migrations
                     b.HasOne("Tunify_Platform.Models.Subscription", "Subscription")
                         .WithMany("Users")
                         .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Subscription");
