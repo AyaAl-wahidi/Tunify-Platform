@@ -17,61 +17,94 @@ namespace Tunify_Platform.Controllers
 
         // GET: api/Artists
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Artist>>> GetArtist()
+        public async Task<ActionResult<IEnumerable<Artist>>> GetArtists()
         {
             return await _context.GetAllArtist();
         }
 
         // GET: api/Artists/5
-        [Route("/GetAllArtists")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Artist>> GetArtist(int id)
         {
-            return await _context.GetArtistById(id);
+            var artist = await _context.GetArtistById(id);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+            return artist;
         }
 
         // PUT: api/Artists/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArtist(int id, Artist artist)
+        public async Task<IActionResult> UpdateArtist(int ArtistId, [FromBody] Artist artist)
         {
-            var updateUser = await _context.UpdateArtist(id, artist);
-            return Ok(updateUser);
+            if (ArtistId != artist.ArtistId)
+            {
+                return BadRequest("Artist ID mismatch");
+            }
+
+            var updatedArtist = await _context.UpdateArtist(ArtistId, artist);
+            if (updatedArtist == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(updatedArtist);
         }
 
         // POST: api/Artists
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Artist>> PostArtist(Artist artist)
+        public async Task<ActionResult<Artist>> AddArtist([FromBody] Artist artist)
         {
-            var addUser = await _context.CreateArtist(artist);
-            return Ok(addUser);
+            var addedArtist = await _context.CreateArtist(artist);
+            return CreatedAtAction(nameof(GetArtist), new { id = addedArtist.ArtistId }, addedArtist);
         }
 
         // DELETE: api/Artists/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArtist(int id)
         {
-            var deleteUser = _context.DeleteArtist(id);
-            return Ok();
+            try
+            {
+                var artist = await _context.GetArtistById(id);
+                if (artist == null)
+                {
+                    return NotFound();
+                }
+
+                await _context.DeleteArtist(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                // Log the error
+                Console.WriteLine($"An error occurred: {e.Message}");
+                return StatusCode(500, $"Internal server error: {e.Message}");
+            }
         }
 
+        // POST: api/Artists/{artistId}/songs/{songId}
         [HttpPost("{artistId}/songs/{songId}")]
-        public async Task<Song> AddSongToArtist(int artistId, int songId)
+        public async Task<ActionResult<Song>> AddSongToArtist(int artistId, int songId)
         {
-            var Song = await _context.AddSongToArtist(artistId, songId);
-            return Song;
+            var song = await _context.AddSongToArtist(artistId, songId);
+            if (song == null)
+            {
+                return NotFound($"Song with ID {songId} not found or could not be added to artist with ID {artistId}");
+            }
+            return Ok(song);
         }
 
+        // GET: api/Artists/{artistId}/songs
         [HttpGet("{artistId}/songs")]
         public async Task<ActionResult<IEnumerable<Song>>> GetAllSongsFromArtistId(int artistId)
         {
             var songs = await _context.GetAllSongsFromArtistId(artistId);
             if (songs == null || !songs.Any())
             {
-                return NotFound($"No songs found for playlist with ID {artistId}");
+                return NotFound($"No songs found for artist with ID {artistId}");
             }
-            return songs;
+            return Ok(songs);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Tunify_Platform
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
             builder.Services.AddControllers();
 
             // Get the connection string settings
@@ -23,7 +24,37 @@ namespace Tunify_Platform
             builder.Services.AddScoped<IPlaylist, PlaylistServise>();
             builder.Services.AddScoped<ISong, SongService>();
 
+            // Swagger Configration
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("tunifyApi", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Tunify API",
+                    Version = "v1",
+                    Description = "API for managing playlists, songs, and artists in the Tunify Platform"
+                });
+            });
+
             var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            // Call Swagger Service
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "api/{documentName}/swagger.json";
+            });
+
+            // Call Swagger UI
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/tunifyApi/swagger.json", "Tunify API v1");
+                options.RoutePrefix = "";
+            });
+
             app.MapControllers();
             app.MapGet("/", () => "Hello World!");
 
