@@ -47,6 +47,49 @@ We enhanced the Tunify Platform with advanced navigation and routing features. T
 - Users can associate songs with an artist via the `POST /api/Artists/{artistId}/songs/{songId}` endpoint.
 - All songs by an artist can be retrieved using the `GET /api/Artists/{artistId}/songs` endpoint.
 
+## Swagger UI Integration
+
+### Overview
+
+Swagger UI has been added to the Tunify Platform project to provide an interactive interface for exploring and testing API endpoints. This integration allows developers to visualize the API structure, make requests, and view responses directly in the browser, which simplifies the testing and debugging process.
+
+### Accessing Swagger UI
+
+1. **Start the Application**:
+   - Ensure that the Tunify Platform application is running. You can start the application using the following command:
+     ```bash
+     dotnet run
+     ```
+   - Alternatively, you can run the application through your IDE's run/debug feature.
+
+2. **Open Swagger UI**:
+   - Once the application is running, open your web browser and navigate to:
+     ```
+     http://localhost:5000/
+     ```
+   - This URL will load the Swagger UI, displaying all the available API endpoints.
+
+### Using Swagger UI
+
+1. **Explore API Endpoints**:
+   - Swagger UI presents a list of all available API endpoints, categorized by controllers such as `ArtistsController` and `SongsController`.
+   - Each endpoint includes details like HTTP methods (GET, POST, PUT, DELETE), required parameters, and expected responses.
+
+2. **Test API Endpoints**:
+   - To test an API endpoint, expand its section in Swagger UI.
+   - Click the "Try it out" button, enter any necessary parameters or request body data, and then click "Execute" to send the request.
+   - Swagger UI will display the server's response, including status codes, headers, and response bodies.
+
+3. **Review Responses**:
+   - After executing a request, review the response details provided by Swagger UI.
+   - Use the response information to verify that the API is functioning correctly and returning the expected results.
+
+### Swagger Configuration in the Project
+
+The Swagger UI integration is configured in the `Program.cs` file of the Tunify Platform project.
+
+
+
 - ## Tunify ERD Diagram
 ![Tunify ERD Diagram](/Tunify-Platform/Assets/TuinyfyPlatform-ERD.JPG)
 
