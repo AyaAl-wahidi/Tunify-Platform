@@ -88,7 +88,36 @@ Swagger UI has been added to the Tunify Platform project to provide an interacti
 
 The Swagger UI integration is configured in the `Program.cs` file of the Tunify Platform project.
 
+## Identity Setup
 
+The Tunify Platform uses ASP.NET Core Identity for managing user authentication. Follow the instructions below for registration, login, and logout functionalities.
+
+### 1. Registration
+
+**Purpose**: Create a new user account.
+
+**Steps**:
+
+1. **Prepare the Request**:
+   - **Endpoint**: `POST /api/Account/Register`
+   - **URL**: `http://localhost:5000/api/Account/Register`
+   - **Method**: POST
+   - **Headers**: `Content-Type: application/json`
+   - **Request Body**:
+     ```json
+     {
+       "username": "newuser",
+       "password": "password123",
+       "confirmPassword": "password123"
+     }
+     ```
+
+2. **Send the Request**:
+   - Use tools like Postman, CURL, or a frontend client to send the request to the URL with the JSON body.
+
+3. **Handle the Response**:
+   - **Success**: Returns a 200 OK status with a confirmation message.
+   - **Failure**: If validation fails or the user already exists, you will receive a 400 Bad Request status with an error message.
 
 - ## Tunify ERD Diagram
 ![Tunify ERD Diagram](/Tunify-Platform/Assets/TuinyfyPlatform-ERD.JPG)
