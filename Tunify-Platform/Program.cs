@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Tunify_Platform.Data;
+using Tunify_Platform.Models;
 using Tunify_Platform.Repositories.Interfaces;
 using Tunify_Platform.Repositories.Services;
 
@@ -18,11 +20,18 @@ namespace Tunify_Platform
 
             builder.Services.AddDbContext<TunifyDbContext>(op => op.UseSqlServer(ConnectionStringVar));
 
+            // Add Identity Service
+            builder.Services.AddIdentity<Account, IdentityRole>()
+                .AddEntityFrameworkStores<TunifyDbContext>();
+
+            builder.Services.AddHttpContextAccessor();
+
             //Add The Services & Interfaces Access
             builder.Services.AddScoped<IUser, UserService>();
             builder.Services.AddScoped<IArtist, ArtistService>();
             builder.Services.AddScoped<IPlaylist, PlaylistServise>();
             builder.Services.AddScoped<ISong, SongService>();
+            builder.Services.AddScoped<IAccount, IdentityAccountService>();
 
             // Swagger Configration
             builder.Services.AddSwaggerGen(options =>
@@ -31,11 +40,14 @@ namespace Tunify_Platform
                 {
                     Title = "Tunify API",
                     Version = "v1",
-                    Description = "API for managing playlists, songs, and artists in the Tunify Platform"
+                    Description = "This API developed as part of the Tunify Platform project, is designed to manage various entities related to music, such as artists, songs, and playlists. The API allows users to perform CRUD (Create, Read, Update, Delete) operations on these entities, making it possible to build, organize, and manage a music library."
                 });
             });
 
             var app = builder.Build();
+
+            app.UseAuthentication();
+            //app.UseAuthorization();
 
             if (app.Environment.IsDevelopment())
             {
