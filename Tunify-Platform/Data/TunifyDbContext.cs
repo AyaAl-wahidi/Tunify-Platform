@@ -2,10 +2,11 @@
 using Tunify_Platform.Models;
 using System;
 using Microsoft.Identity.Client;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Tunify_Platform.Data
 {
-    public class TunifyDbContext : DbContext
+    public class TunifyDbContext : IdentityDbContext<Account>
     {
         public TunifyDbContext(DbContextOptions options) : base(options) { }
 
