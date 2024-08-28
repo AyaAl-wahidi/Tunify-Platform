@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using Tunify_Platform.Models;
 using Tunify_Platform.Models.DTO;
 using Tunify_Platform.Repositories.Interfaces;
@@ -10,12 +11,14 @@ namespace Tunify_Platform.Repositories.Services
     {
         private readonly UserManager<Account> _userManager;
         private readonly SignInManager<Account> _signInManager;
+        private readonly JwtTokenService jwtTokenService;
         //private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IdentityAccountService(UserManager<Account> context, SignInManager<Account> signInManager)
+        public IdentityAccountService(UserManager<Account> context, SignInManager<Account> signInManager, JwtTokenService jwtTokenService)
         {
             _userManager = context;
             _signInManager = signInManager;
+            this.jwtTokenService = jwtTokenService;
         }
 
         public async Task<AccountDTO> Register(RegisterDTO registerDTO)
@@ -26,7 +29,7 @@ namespace Tunify_Platform.Repositories.Services
                 Email = registerDTO.Email
             };
             var resultWithPass = await _userManager.CreateAsync(account, registerDTO.Password);
-
+            await _userManager.AddToRolesAsync(account, registerDTO.Roles);
             // The return type is AccountDTO, so we create an instanse to get the info
             var accDto = new AccountDTO()
             {
@@ -45,9 +48,9 @@ namespace Tunify_Platform.Repositories.Services
             var result = new AccountDTO()
             {
                 Id = usernameAccount.Id,
-                Username = usernameAccount.UserName
+                Username = usernameAccount.UserName,
+                Token = await jwtTokenService.GenerateToken(usernameAccount, System.TimeSpan.FromMinutes(7))
             };
-
             return result;
         }
 
@@ -70,6 +73,21 @@ namespace Tunify_Platform.Repositories.Services
             };
 
             return result;
+        }
+
+        public async Task<AccountDTO> GetToken(ClaimsPrincipal claimsPrincipal)
+        {
+            var newToken = await _userManager.GetUserAsync(claimsPrincipal);
+            if (newToken == null)
+            {
+                throw new InvalidOperationException("Token Is Not Exist!");
+            }
+            return new AccountDTO()
+            {
+                Id = newToken.Id,
+                Username = newToken.UserName,
+                Token = await jwtTokenService.GenerateToken(newToken, System.TimeSpan.FromMinutes(3)) // just for development purposes
+            };
         }
     }
 }

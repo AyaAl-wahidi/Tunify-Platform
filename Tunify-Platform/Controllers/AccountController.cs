@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Tunify_Platform.Models.DTO;
 using Tunify_Platform.Repositories.Interfaces;
+using Tunify_Platform.Repositories.Services;
 
 namespace Tunify_Platform.Controllers
 {
@@ -35,6 +37,14 @@ namespace Tunify_Platform.Controllers
         {
             var newLogout = await _context.Logout(username);
             return newLogout;
+        }
+
+        [Authorize(Roles = "Admin")]
+        //[Authorize(Policy = "create")]
+        [HttpGet("Profile")]
+        public async Task<ActionResult<AccountDTO>> Profile()
+        {
+            return await _context.GetToken(User);
         }
     }
 }
