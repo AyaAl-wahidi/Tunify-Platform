@@ -3,6 +3,7 @@ using Tunify_Platform.Models;
 using System;
 using Microsoft.Identity.Client;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Tunify_Platform.Data
 {
@@ -119,6 +120,33 @@ namespace Tunify_Platform.Data
                 new PlaylistSongs { PlaylistSongsId = 1, PlaylistId = 1, SongId = 1 },
                 new PlaylistSongs { PlaylistSongsId = 2, PlaylistId = 2, SongId = 2 }
             );
+
+            seedRoles(modelBuilder, "Admin", "create" , "update");
+            seedRoles(modelBuilder, "User" , "update");
+        }
+
+        private void seedRoles(ModelBuilder modelBuilder, string roleName, params string[] permission)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+
+            // add claims for the users
+            var claims = permission.Select(permission => new IdentityRoleClaim<string>
+            {
+                Id = Guid.NewGuid().GetHashCode(), // Unique identifier
+                RoleId = role.Id,
+                ClaimType = "permission",
+                ClaimValue = permission
+            }).ToArray();
+
+            // Seed the role and its claims
+            modelBuilder.Entity<IdentityRole>().HasData(role);
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(claims);
         }
     }
 }

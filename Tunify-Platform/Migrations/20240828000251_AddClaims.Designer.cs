@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tunify_Platform.Data;
 
@@ -11,9 +12,11 @@ using Tunify_Platform.Data;
 namespace Tunify_Platform.Migrations
 {
     [DbContext(typeof(TunifyDbContext))]
-    partial class TunifyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240828000251_AddClaims")]
+    partial class AddClaims
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,21 +95,28 @@ namespace Tunify_Platform.Migrations
                     b.HasData(
                         new
                         {
-                            Id = -1504998532,
+                            Id = 132728676,
                             ClaimType = "permission",
                             ClaimValue = "create",
                             RoleId = "admin"
                         },
                         new
                         {
-                            Id = -30977526,
+                            Id = 629323637,
                             ClaimType = "permission",
                             ClaimValue = "update",
                             RoleId = "admin"
                         },
                         new
                         {
-                            Id = 2064380599,
+                            Id = 1854669225,
+                            ClaimType = "permission",
+                            ClaimValue = "delete",
+                            RoleId = "admin"
+                        },
+                        new
+                        {
+                            Id = -552013858,
                             ClaimType = "permission",
                             ClaimValue = "update",
                             RoleId = "user"
@@ -363,28 +373,28 @@ namespace Tunify_Platform.Migrations
                         new
                         {
                             PlaylistId = 1,
-                            Created_Date = new DateTime(2024, 8, 28, 16, 51, 12, 985, DateTimeKind.Local).AddTicks(8759),
+                            Created_Date = new DateTime(2024, 8, 28, 3, 2, 50, 845, DateTimeKind.Local).AddTicks(6479),
                             Playlist_Name = "Playlist One",
                             UserId = 1
                         },
                         new
                         {
                             PlaylistId = 2,
-                            Created_Date = new DateTime(2024, 8, 28, 16, 51, 12, 985, DateTimeKind.Local).AddTicks(8761),
+                            Created_Date = new DateTime(2024, 8, 28, 3, 2, 50, 845, DateTimeKind.Local).AddTicks(6480),
                             Playlist_Name = "Playlist Two",
                             UserId = 2
                         },
                         new
                         {
                             PlaylistId = 3,
-                            Created_Date = new DateTime(2024, 8, 28, 16, 51, 12, 985, DateTimeKind.Local).AddTicks(8762),
+                            Created_Date = new DateTime(2024, 8, 28, 3, 2, 50, 845, DateTimeKind.Local).AddTicks(6482),
                             Playlist_Name = "Playlist 3",
                             UserId = 1
                         },
                         new
                         {
                             PlaylistId = 4,
-                            Created_Date = new DateTime(2024, 8, 28, 16, 51, 12, 985, DateTimeKind.Local).AddTicks(8764),
+                            Created_Date = new DateTime(2024, 8, 28, 3, 2, 50, 845, DateTimeKind.Local).AddTicks(6483),
                             Playlist_Name = "Playlist 4",
                             UserId = 2
                         });
@@ -566,7 +576,7 @@ namespace Tunify_Platform.Migrations
                         {
                             UserId = 1,
                             Email = "user1@example.com",
-                            Join_Date = new DateTime(2024, 8, 28, 16, 51, 12, 985, DateTimeKind.Local).AddTicks(8667),
+                            Join_Date = new DateTime(2024, 8, 28, 3, 2, 50, 845, DateTimeKind.Local).AddTicks(6453),
                             SubscriptionId = 1,
                             Username = "user1"
                         },
@@ -574,7 +584,7 @@ namespace Tunify_Platform.Migrations
                         {
                             UserId = 2,
                             Email = "user2@example.com",
-                            Join_Date = new DateTime(2024, 8, 28, 16, 51, 12, 985, DateTimeKind.Local).AddTicks(8736),
+                            Join_Date = new DateTime(2024, 8, 28, 3, 2, 50, 845, DateTimeKind.Local).AddTicks(6465),
                             SubscriptionId = 2,
                             Username = "user2"
                         });

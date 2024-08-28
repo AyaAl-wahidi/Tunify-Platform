@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Tunify_Platform.Models;
 using Tunify_Platform.Repositories.Interfaces;
 
@@ -53,7 +54,7 @@ namespace Tunify_Platform.Controllers
         {
             try
             {
-                await DeleteUser(id); // Await the async operation
+                await _context.DeleteUser(id); // Await the async operation
                 return Ok(); // Return a 200 OK response if successful
             }
             catch (Exception e)
